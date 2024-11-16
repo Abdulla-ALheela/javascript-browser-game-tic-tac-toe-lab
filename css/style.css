@@ -21,7 +21,7 @@ body {
     text-align: center;
   }
   
-  #reset {
+  button {
     padding: 1.5rem;
     line-height: 1em;
     font-size: 1.5rem;
@@ -34,6 +34,17 @@ body {
     transition: background-color 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 
-  #reset:hover {
+  button:hover {
     background-color: #3472bd;
   }
+
+  .hidden{
+
+visibility: hidden;
+
+  }
+
+  /* .hidden-after{
+
+    visibility: hidden;
+  } */
