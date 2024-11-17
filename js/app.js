@@ -57,6 +57,7 @@ let humanPlay
 let aiOn
 let aiTurn
 let random
+let comapre
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -69,37 +70,186 @@ const hiddenEl = document.querySelectorAll(".hidden");
 const hiddenAfterEl = document.querySelector(".hidden-after");
 const playerEl = document.querySelector("#player");
 /*-------------------------------- Functions --------------------------------*/
-const ai = (event) => {
-   
-    if (aiOn === true && winner === false && tie === false) {
-        random = Math.floor(Math.random() * 9)
-        while(board[random] != ""){
-            random = Math.floor(Math.random() * 9)
+const decision = () => {
+    if (humanPlay
+        === "You play: X") {
 
-        }
-        
-        board[random] = aiTurn 
+        comapre = "X"
+
+    } else {
+        comapre = "O"
     }
+
+    switch (true) {
+        case board[4] === "":
+            board[4] = aiTurn
+            break;
+        case board[0] === aiTurn && board[1] === aiTurn && board[2] === "":
+            board[2] = aiTurn
+            break;
+        case board[3] === aiTurn && board[4] === aiTurn && board[5] === "":
+            board[5] = aiTurn
+            break;
+        case board[6] === aiTurn && board[7] === aiTurn && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[2] === aiTurn && board[1] === aiTurn && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[4] === aiTurn && board[5] === aiTurn && board[3] === "":
+            board[3] = aiTurn
+            break;
+        case board[7] === aiTurn && board[8] === aiTurn && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[0] === aiTurn && board[2] === aiTurn && board[1] === "":
+            board[1] = aiTurn
+            break;
+        case board[3] === aiTurn && board[5] === aiTurn && board[4] === "":
+            board[4] = aiTurn
+            break;
+        case board[6] === aiTurn && board[8] === aiTurn && board[7] === "":
+            board[7] = aiTurn
+            break;
+        case board[0] === aiTurn && board[3] === aiTurn && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[1] === aiTurn && board[4] === aiTurn && board[7] === "":
+            board[7] = aiTurn
+            break;
+        case board[2] === aiTurn && board[5] === aiTurn && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[6] === aiTurn && board[3] === aiTurn && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[7] === aiTurn && board[4] === aiTurn && board[1] === "":
+            board[1] = aiTurn
+            break;
+        case board[8] === aiTurn && board[5] === aiTurn && board[2] === "":
+            board[2] = aiTurn
+            break;
+        case board[0] === aiTurn && board[6] === aiTurn && board[3] === "":
+            board[3] = aiTurn
+            break;
+        case board[1] === aiTurn && board[7] === aiTurn && board[4] === "":
+            board[4] = aiTurn
+            break;
+        case board[2] === aiTurn && board[8] === aiTurn && board[5] === "":
+            board[5] = aiTurn
+            break;
+        case board[2] === aiTurn && board[4] === aiTurn && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[0] === aiTurn && board[4] === aiTurn && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[8] === aiTurn && board[4] === aiTurn && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[6] === aiTurn && board[4] === aiTurn && board[2] === "":
+            board[2] = aiTurn
+            break;
+        case board[0] === comapre && board[1] === comapre && board[2] === "":
+            board[2] = aiTurn
+            break;
+        case board[3] === comapre && board[4] === comapre && board[5] === "":
+            board[5] = aiTurn
+            break;
+        case board[6] === comapre && board[7] === comapre && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[2] === comapre && board[1] === comapre && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[4] === comapre && board[5] === comapre && board[3] === "":
+            board[3] = aiTurn
+            break;
+        case board[7] === comapre && board[8] === comapre && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[0] === comapre && board[2] === comapre && board[1] === "":
+            board[1] = aiTurn
+            break;
+        case board[3] === comapre && board[5] === comapre && board[4] === "":
+            board[4] = aiTurn
+            break;
+        case board[6] === comapre && board[8] === comapre && board[7] === "":
+            board[7] = aiTurn
+            break;
+        case board[0] === comapre && board[3] === comapre && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[1] === comapre && board[4] === comapre && board[7] === "":
+            board[7] = aiTurn
+            break;
+        case board[2] === comapre && board[5] === comapre && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[6] === comapre && board[3] === comapre && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[7] === comapre && board[4] === comapre && board[1] === "":
+            board[1] = aiTurn
+            break;
+        case board[8] === comapre && board[5] === comapre && board[2] === "":
+            board[2] = aiTurn
+            break;
+        case board[0] === comapre && board[6] === comapre && board[3] === "":
+            board[3] = aiTurn
+            break;
+        case board[1] === comapre && board[7] === comapre && board[4] === "":
+            board[4] = aiTurn
+            break;
+        case board[2] === comapre && board[8] === comapre && board[5] === "":
+            board[5] = aiTurn
+            break;
+        case board[2] === comapre && board[4] === comapre && board[6] === "":
+            board[6] = aiTurn
+            break;
+        case board[0] === comapre && board[4] === comapre && board[8] === "":
+            board[8] = aiTurn
+            break;
+        case board[8] === comapre && board[4] === comapre && board[0] === "":
+            board[0] = aiTurn
+            break;
+        case board[6] === comapre && board[4] === comapre && board[2] === "":
+            board[2] = aiTurn
+            break;
+        default:
+            if (aiOn === true && winner === false && tie === false) {
+                random = Math.floor(Math.random() * 9)
+                while (board[random] != "") {
+                    random = Math.floor(Math.random() * 9)
+
+                }
+                board[random] = aiTurn
+            }
+
+    }
+}
+
+const ai = () => {
+
+    decision()
     checkForWinner()
     checkForTie()
-    console.log(winner);
-    
-    if(aiTurn === "X" && winner === false){
+
+
+    if (aiTurn === "X" && winner === false) {
         turn = "O"
-    } else if(aiTurn === "O" && winner === false){
+    } else if (aiTurn === "O" && winner === false) {
         turn = "X"
-    
+
     }
-    
-    if(winner === true){
 
-console.log("win");
+    if (winner === true) {
 
-if(turn === "X"){
-    turn ="O"
-}else if(aiTurn === "O"){
-    turn = "X"
-}
+        if (turn === "X") {
+            turn = "O"
+        } else if (aiTurn === "O") {
+            turn = "X"
+        }
     }
 }
 
@@ -145,10 +295,7 @@ const updateBoard = () => {
 
 
 const updateMessage = () => {
-    console.log(turn);
-    console.log(humanPlay);
-    console.log(winner);
-    console.log(aiOn);
+
     //  if (winner === true && aiOn === true){
     //     if(turn === "X"){
     //         turn = "O"
@@ -208,8 +355,8 @@ const checkForWinner = () => {
 
 
 const checkForTie = () => {
-   
-    
+
+
     board.forEach((elemetn) => {
         if (elemetn != "" && winner === false) {
 
@@ -233,40 +380,40 @@ const handelTurn = (event) => {
     if (turn === "X" && board[event.srcElement.attributes[1].textContent] === "" && winner === false && tie === false) {
         board[event.srcElement.attributes[1].textContent] = "X";
         checkForWinner()
-        
+
         turn = "O"
     } else if (turn === "O" && board[event.srcElement.attributes[1].textContent] === "" && winner === false && tie === false) {
         board[event.srcElement.attributes[1].textContent] = "O";
         checkForWinner()
-        
-       turn = "X"
+
+        turn = "X"
     }
 
 }
 
 // const switchPlayer = (event) => {
-    
+
 //     if (turn === "X" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
-       
-        
+
+
 //     } else if (turn === "O" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
-      
-        
+
+
 //     }
 
 
 // }
 
 const handleClick = (event) => {
-    
+
     handelTurn(event)
     checkForTie()
     // switchPlayer(event)
-    if(aiOn === true && turn === aiTurn && winner === false){
-        
+    if (aiOn === true && turn === aiTurn && winner === false) {
+
         ai()
-        }
-       
+    }
+
     render()
 }
 
@@ -303,9 +450,9 @@ const initAi = () => {
     frindEl.textContent = "play with friend"
     aiOn = true
     chose();
-    if(aiOn === true && turn === aiTurn ){
+    if (aiOn === true && turn === aiTurn) {
         ai()
-        }
+    }
     render();
 
 
