@@ -29,6 +29,7 @@
 
 
 /*-------------------------------- Constants --------------------------------*/
+// All possible win combos
 const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -39,6 +40,7 @@ const winningCombos = [
     [2, 4, 6],
     [0, 4, 8],
 ];
+const corners = [0,2,6,8];
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -51,13 +53,14 @@ let firstValue = "i";
 let secondValue = "";
 let thirdValue = "";
 let i = 0;
-let playerPlay
-let aiPlay
-let humanPlay
-let aiOn
-let aiTurn
-let random
-let comapre
+let playerPlay;
+let aiPlay;
+let humanPlay;
+let aiOn;
+let aiTurn;
+let random;
+let comapre;
+let randomCorner;
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -70,7 +73,10 @@ const hiddenEl = document.querySelectorAll(".hidden");
 const hiddenAfterEl = document.querySelector(".hidden-after");
 const playerEl = document.querySelector("#player");
 /*-------------------------------- Functions --------------------------------*/
+
+// Function to make AI think 
 const decision = () => {
+// check if player playing X or O
     if (humanPlay
         === "You play: X") {
 
@@ -78,8 +84,8 @@ const decision = () => {
 
     } else {
         comapre = "O"
-    }
-
+    };
+//logic for AI to check if cneter empty to take it,check if AI can make wining move and check if player is about to win to block it
     switch (true) {
         case board[4] === "":
             board[4] = aiTurn
@@ -216,7 +222,20 @@ const decision = () => {
         case board[6] === comapre && board[4] === comapre && board[2] === "":
             board[2] = aiTurn
             break;
+            case board[0] === "":
+            board[0] = aiTurn
+            break;
+            case board[2] === "":
+            board[2] = aiTurn
+            break;
+            case board[6] === "":
+            board[6] = aiTurn
+            break;
+            case board[8] === "":
+            board[8] = aiTurn
+            break;
         default:
+            // reandom decision
             if (aiOn === true && winner === false && tie === false) {
                 random = Math.floor(Math.random() * 9)
                 while (board[random] != "") {
@@ -224,24 +243,24 @@ const decision = () => {
 
                 }
                 board[random] = aiTurn
-            }
+            };
 
     }
-}
-
+};
+// finction to handle AI turn 
 const ai = () => {
+    decision();
+    checkForWinner();
+    checkForTie();
 
-    decision()
-    checkForWinner()
-    checkForTie()
-
-
+// switch AI turn
     if (aiTurn === "X" && winner === false) {
         turn = "O"
     } else if (aiTurn === "O" && winner === false) {
         turn = "X"
 
-    }
+    };
+//switch turn for updateMassage function to display the correct outcome
 
     if (winner === true) {
 
@@ -249,14 +268,14 @@ const ai = () => {
             turn = "O"
         } else if (aiTurn === "O") {
             turn = "X"
-        }
-    }
-}
+        };
+    };
+};
 
-
+// function to detemine how play X and how play O if play with AI button pressed
 const chose = () => {
 
-    playerPlay = Math.floor(Math.random() * 2)
+    playerPlay = Math.floor(Math.random() * 2);
 
 
     if (playerPlay === 0) {
@@ -270,39 +289,51 @@ const chose = () => {
         humanPlay = "You play: X"
         aiTurn = "O"
         playerEl.textContent = aiPlay + humanPlay
-    }
+    };
 
 
-}
-
+};
+// function to update game states 
 const render = () => {
     updateBoard();
     updateMessage();
-}
+};
 
 
-
+// function to update board states
 const updateBoard = () => {
 
     squareEls.forEach((square) => {
 
 
         square.textContent = board[square.id];
+        
+        if(square.textContent === "X"){
+            
+            square.style.color = "darkorange";
+
+
+
+        }else if(square.textContent === "O"){
+
+            square.style.color = "gold";
+            
+        };
 
     });
 
-}
+};
 
-
+// function to update message
 const updateMessage = () => {
 
-    //  if (winner === true && aiOn === true){
-    //     if(turn === "X"){
-    //         turn = "O"
-    //     }else if(turn === "O"){
-    //         turn = "X"
-    //     }
-    // }
+                        //  if (winner === true && aiOn === true){
+                        //     if(turn === "X"){
+                        //         turn = "O"
+                        //     }else if(turn === "O"){
+                        //         turn = "X"
+                        //     }
+                        // }
 
     if (winner === false && tie === false) {
 
@@ -326,6 +357,8 @@ const updateMessage = () => {
         };
     };
 };
+
+//function to check for winner
 const checkForWinner = () => {
 
     winningCombos.forEach((winningCombo) => {
@@ -346,14 +379,14 @@ const checkForWinner = () => {
 
             winner = true
 
-        }
-        firstValue = "i"
-        secondValue = ""
-        thirdValue = ""
+        };
+        firstValue = "i";
+        secondValue = "";
+        thirdValue = "";
     });
 }
 
-
+//function to check for tie
 const checkForTie = () => {
 
 
@@ -361,7 +394,7 @@ const checkForTie = () => {
         if (elemetn != "" && winner === false) {
 
             i++;
-        }
+        };
     });
     if (i === 9 && winner === false) {
 
@@ -373,7 +406,7 @@ const checkForTie = () => {
 };
 
 
-
+//function to handle turn it update board arreay based on player slection and then flip turns
 const handelTurn = (event) => {
 
 
@@ -387,57 +420,39 @@ const handelTurn = (event) => {
         checkForWinner()
 
         turn = "X"
-    }
-
-}
-
-// const switchPlayer = (event) => {
-
-//     if (turn === "X" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
-
-
-//     } else if (turn === "O" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
-
-
-//     }
-
-
-// }
-
-const handleClick = (event) => {
-
-    handelTurn(event)
-    checkForTie()
-    // switchPlayer(event)
-    if (aiOn === true && turn === aiTurn && winner === false) {
-
-        ai()
-    }
-
-    render()
-}
-
-
-const init = () => {
-    board = ["", "", "", "", "", "", "", "", ""]
-    turn = "X";
-    winner = false;
-    tie = false;
-    hiddenEl.forEach((elements) => {
-
-        elements.classList.remove("hidden");
-
-    })
-    frindEl.textContent = "Reset"
-    AiEl.textContent = "play with AI"
-    playerEl.textContent = ""
-    aiOn = false
-    render();
+    };
 
 };
 
-const initAi = () => {
-    board = ["", "", "", "", "", "", "", "", ""]
+                    // const switchPlayer = (event) => {
+
+                    //     if (turn === "X" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
+
+
+                    //     } else if (turn === "O" && board[event.srcElement.attributes[1].textContent] === ""   && winner === false && tie === false) {
+
+
+                    //     }
+
+
+                    // }
+// function to handle click on boards this function trigger all the other function whenever player click the board
+const handleClick = (event) => {
+
+    handelTurn(event);
+    checkForTie();
+            // switchPlayer(event)
+    if (aiOn === true && turn === aiTurn && winner === false) {
+
+        ai();
+    };
+
+    render();
+};
+
+//function to initiate game for two players if play with friend button was clicked
+const init = () => {
+    board = ["", "", "", "", "", "", "", "", ""];
     turn = "X";
     winner = false;
     tie = false;
@@ -446,12 +461,30 @@ const initAi = () => {
         elements.classList.remove("hidden");
 
     })
-    AiEl.textContent = "Reset"
-    frindEl.textContent = "play with friend"
-    aiOn = true
+    frindEl.textContent = "Reset";
+    AiEl.textContent = "play with AI";
+    playerEl.textContent = "";
+    aiOn = false;
+    render();
+
+};
+//function to initiate game to play with AI if play with AI button was clicked
+const initAi = () => {
+    board = ["", "", "", "", "", "", "", "", ""];
+    turn = "X";
+    winner = false;
+    tie = false;
+    hiddenEl.forEach((elements) => {
+
+        elements.classList.remove("hidden");
+
+    });
+    AiEl.textContent = "Reset";
+    frindEl.textContent = "play with friend";
+    aiOn = true;
     chose();
     if (aiOn === true && turn === aiTurn) {
-        ai()
+        ai();
     }
     render();
 
@@ -464,14 +497,16 @@ const initAi = () => {
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-
+//eventlistener to handle player click 
 squareEls.forEach((square) => {
 
-    square.addEventListener("click", handleClick)
+    square.addEventListener("click", handleClick);
 
 
 });
 
-// resetEl.addEventListener("click",init)
-frindEl.addEventListener("click", init)
-AiEl.addEventListener("click", initAi)
+            // resetEl.addEventListener("click",init)
+//initiate game with friend 
+frindEl.addEventListener("click", init);
+//initiate game with AI 
+AiEl.addEventListener("click", initAi);
